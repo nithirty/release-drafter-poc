@@ -1,13 +1,11 @@
 # Configuration for Release Drafter: https://github.com/toolmantim/release-drafter
 #name-template: $NEXT_MINOR_VERSION
 #tag-template: $NEXT_MINOR_VERSION
-
-name-template: '$MAJOR.$MINOR.$PATCH 🌈'
-tag-template: $MAJOR.$MINOR.$PATCH
-
+#tag-prefix: $MAJOR.$MINOR.$PATCH
+version-template: $MAJOR.$MINOR.$PATCH$PRERELEASE
 #version-template: $MAJOR.$MINOR
-#name-template: 'v$RESOLVED_VERSION 🌈'
-#tag-template: 'v$RESOLVED_VERSION'
+name-template: 'v$RESOLVED_VERSION 🌈'
+tag-template: 'v$RESOLVED_VERSION'
 categories:
   - title: 🎉 Major features and improvements
     labels:
@@ -15,7 +13,7 @@ categories:
       - major-rfe
   - title: 🐛 Major bug fixes
     labels:
-      - major-bug     
+      - major-bug
   - title: ⚠️ Deprecated
     labels:
       - deprecated
@@ -31,9 +29,6 @@ categories:
       - bugfix
       - regression
       - regression-fix
-  - title: 🌐 Localization and translation
-    labels:
-      - localization
   - title: 👷 Changes for plugin developers
     labels:
       - developer
