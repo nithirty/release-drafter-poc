@@ -74,3 +74,5 @@ autolabeler:
   - label: 'enhancement'
     branch:
       - '/feature\/.+/'
+  - label: major-enhancement
+      - '/major\/.+/'
