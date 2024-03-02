@@ -50,7 +50,7 @@ categories:
       - test
       - tests
   - title: ✍ Other changes
-  # Default label used by Dependabot
+  ## Default label used by Dependabot 
   - title: 📦 Dependency updates
     labels:
       - dependencies
