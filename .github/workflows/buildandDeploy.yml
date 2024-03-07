@@ -1,0 +1,34 @@
+name: Build and Approval Workflow
+
+on:
+  push:
+    branches:
+      - dev
+  repository_dispatch:
+    types:
+      - approve-deployment
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Build the project
+        run: |
+          echo "Hello"
+
+  deploy:
+    if: github.event_name == 'repository_dispatch'
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Deploy the project
+        run: |
+          echo "Hello"
