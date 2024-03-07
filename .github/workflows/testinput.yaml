@@ -6,15 +6,6 @@ on:
       - main
   workflow_dispatch:  # Enable manual run
     inputs:
-        logLevel:
-          description: 'Environment where Database Needs to be created'
-          required: true
-          default: 'test'
-          type: choice
-          options:
-            - dev
-            - test
-            - prod
         postgres_database:
           description: 'Enter Database Name'
           required: true
@@ -24,12 +15,13 @@ on:
           required: true
           type: string
         environment:
-          description: 'Environment to run tests against'
+          description: 'Environment to Database to be created against'
           type: environment
           required: true
 
 jobs:
     automate-tasks:
+        environment: ${{inputs.environment}}
         runs-on: ubuntu-latest
         steps:
         - name: Checkout repository
@@ -48,7 +40,7 @@ jobs:
         - name : Run script to create database and user
           run: python automate_tasks.py    
         
-        - name : Set env
+        - name : 
           env: 
               POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
               POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
@@ -56,5 +48,7 @@ jobs:
               POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }} 
               POSTGRES_DBUSER_PASSWORD : ${{ secrets.POSTGRES_PASSWORD }}
               POSTGRES_DATABASE: ${{ inputs.postgres_database }} 
-              POSTGRES_DB_USER: ${{ inputs.postgres_db_user }} 
-          run: echo "Hello world"
+              POSTGRES_DB_USER: ${{ inputs.postgres_db_user }}
+          run: |
+            echo ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            echo ${{ secrets.AWS_ACCESS_KEY_ID }}
