@@ -1,0 +1,44 @@
+name: Approval Request
+
+on:
+  workflow_run:
+    workflows: ["Build and Approval Workflow"]
+    types:
+      - completed
+
+jobs:
+  request_approval:
+    if: github.event.workflow_run.event == 'push' && github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Wait for approval
+        uses: actions/github-script@v4
+        with:
+          script: |
+            const issue_number = await github.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: "Deployment Approval",
+              body: "Please approve the deployment by adding a comment with the `/approve` command."
+            }).then(response => response.data.number);
+
+            const { data: comment } = await github.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue_number,
+              body: "To approve the deployment, comment with the `/approve` command."
+            });
+
+            await github.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue_number,
+              labels: ["deployment-approval"]
+            });
+
+            await github.issues.lock({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue_number
+            });
