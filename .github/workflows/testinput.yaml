@@ -40,15 +40,10 @@ jobs:
         - name : Run script to create database and user
           run: python automate_tasks.py    
         
-        - name : 
-          env: 
-              POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
-              POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
-              POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-              POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }} 
-              POSTGRES_DBUSER_PASSWORD : ${{ secrets.POSTGRES_PASSWORD }}
-              POSTGRES_DATABASE: ${{ inputs.postgres_database }} 
-              POSTGRES_DB_USER: ${{ inputs.postgres_db_user }}
+        - name : Display
           run: |
             echo ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             echo ${{ secrets.AWS_ACCESS_KEY_ID }}
+            echo ${{ inputs.postgres_db_user }}
+            echo ${{ inputs.postgres_database }}
+            
